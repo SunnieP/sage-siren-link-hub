@@ -1,0 +1,35 @@
+{
+  "brand": {
+    "name": "SageSiren",
+    "vibe": "Spiritual, sage-coded, slightly chaotic, feminine energy",
+    "theme": "dark",
+    "typography": ["Inter", "Poppins", "Manrope"],
+    "ctaAccent": "#ba82ff"
+  },
+  "bio": "Your cozy luxury hub for streaming, social links, and media kit.",
+  "links": [
+    {"label": "Twitch", "url": "https://twitch.tv/SageSiren", "icon": "twitch"},
+    {"label": "TikTok", "url": "https://tiktok.com/@SageSiren", "icon": "tiktok"},
+    {"label": "YouTube", "url": "https://youtube.com/@SageSiren", "icon": "youtube"},
+    {"label": "Instagram", "url": "https://instagram.com/SageSiren", "icon": "instagram"},
+    {"label": "Discord", "url": "https://discord.gg/bunnigang", "icon": "discord"}
+  ],
+  "linkCategories": {
+     "Streaming": [
+          {"label": "Twitch", "url": "https://twitch.tv/SageSiren"},
+          {"label": "YouTube", "url": "https://youtube.com/@SageSiren"},
+          {"label": "TikTok", "url": "https://tiktok.com/@SageSiren"}
+     ],
+     "Socials": [
+         {"label": "Instagram", "url": "https://instagram.com/SageSiren"},
+         {"label": "Discord", "url": "https://discord.gg/bunnigang"}
+     ],
+     "Business": [
+         {"label": "Email", "url": "mailto:sagesirenbiz@gmail.com"}
+     ],
+     "Shop": [
+         {"label": "Merch", "url": "https://rkgamingstore.com"}
+     ]
+  },
+  "contact": "sagesirenbiz@gmail.com"
+}
