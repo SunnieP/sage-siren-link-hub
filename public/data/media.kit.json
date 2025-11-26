@@ -1,5 +1,16 @@
 {
   "about": "Streamer, content creator, cozy luxury specialist. Brand partnerships: Capcom Creator, BunniGang, That Community.",
-  "partnerships": ["Capcom Creator", "BunniGang", "That Community"],
-  "contact": "sagesirenbiz@gmail.com"
+  "partnerships": [
+    "Capcom Creator",
+    "BunniGang",
+    "That Community"
+  ],
+  "contact": "sagesirenbiz@gmail.com",
+  "stats": [
+    {
+      "platform": "Twitch",
+      "followers": 2100
+    }
+  ],
+  "lastUpdated": "2025-11-26T06:35:33.479Z"
 }

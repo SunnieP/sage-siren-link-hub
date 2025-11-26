@@ -1,7 +1,9 @@
 {
   "platforms": [
-    {"platform": "Twitch", "followers": 3200},
-    {"platform": "YouTube", "followers": 860},
-    {"platform": "TikTok", "followers": 13500}
-  ]
+    {
+      "platform": "Twitch",
+      "followers": 2100
+    }
+  ],
+  "lastUpdated": "2025-11-26T06:35:33.478Z"
 }
