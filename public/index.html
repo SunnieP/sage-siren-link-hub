@@ -1,59 +1,156 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Clean, responsive personal media hub for SageSiren. Functions as a Linktree + media kit. Fast, minimal, mobile-first, auto-updated stats.">
-    <meta name="theme-color" content="#344E41">
-    <title>SageSiren | Link Hub</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@700;600&family=Inter:wght@400;500&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="assets/style.css">
-    <script defer src="src/main.js"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <!-- SEO Meta Tags -->
+  <meta name="description" content="SageSiren's cozy luxury hub for streaming, social links, and media kit. Modern feminine design with sage-coded aesthetic.">
+  <meta name="keywords" content="SageSiren, streamer, content creator, Twitch, TikTok, YouTube, media kit">
+  <meta name="author" content="SageSiren">
+  
+  <!-- Open Graph / Social Media -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="SageSiren | Link Hub">
+  <meta property="og:description" content="Your cozy luxury hub for streaming, social links, and media kit.">
+  <meta property="og:image" content="assets/og-image.png">
+  <meta name="twitter:card" content="summary_large_image">
+  
+  <!-- Theme Color -->
+  <meta name="theme-color" content="#344E41">
+  
+  <title>SageSiren | Link Hub</title>
+  
+  <!-- Google Fonts - Cormorant Garamond & Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;0,700;1,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="assets/style.css">
+  
+  <!-- Deferred JavaScript -->
+  <script defer src="src/main.js"></script>
 </head>
 <body class="dark-mode">
-    <!-- Theme Toggle Button -->
-    <button id="theme-toggle" aria-label="Switch to light mode" title="Toggle light/dark mode">🌙</button>
+  <!-- Skip Link for Accessibility -->
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+  
+  <!-- Theme Toggle Button -->
+  <button id="theme-toggle" 
+          aria-label="Switch to light mode" 
+          title="Toggle light/dark mode">
+    🌙
+  </button>
+  
+  <!-- Header Section -->
+  <header class="header">
+    <img src="assets/avatar.png" 
+         alt="SageSiren Avatar - Sage-themed profile" 
+         class="avatar"
+         loading="eager">
+    <h1>SageSiren</h1>
+    <p class="tagline">Spiritual, Sage-coded, Feminine Energy</p>
+    <p class="bio">Your cozy luxury hub for streaming, social links, and media kit.</p>
     
-    <header class="header">
-        <img src="assets/avatar.png" alt="SageSiren Avatar" class="avatar">
-        <h1>SageSiren</h1>
-        <p class="tagline">Spiritual, Sage-coded, Feminine Energy</p>
-        <p class="bio">Your cozy luxury hub for streaming, social links, and media kit.</p>
-        <nav class="cta-buttons" aria-label="Main navigation">
-            <a href="#creator-hub" class="btn">Creator Hub</a>
-            <a href="#link-directory" class="btn">Links</a>
-        </nav>
-    </header>
+    <!-- Navigation CTA Buttons -->
+    <nav class="cta-buttons" aria-label="Main navigation">
+      <a href="#creator-hub" class="btn">Creator Hub</a>
+      <a href="#link-directory" class="btn">Links</a>
+    </nav>
+  </header>
+  
+  <!-- Main Content -->
+  <main id="main-content">
+    <!-- Primary Social Links -->
+    <section id="main-links" 
+             class="card-list" 
+             role="navigation" 
+             aria-label="Primary social media links">
+      <a href="https://twitch.tv/SageSiren" 
+         target="_blank" 
+         rel="noopener noreferrer" 
+         class="card-btn twitch" 
+         aria-label="Visit SageSiren on Twitch - opens in new tab">
+        Twitch
+      </a>
+      <a href="https://tiktok.com/@SageSiren" 
+         target="_blank" 
+         rel="noopener noreferrer" 
+         class="card-btn tiktok" 
+         aria-label="Visit SageSiren on TikTok - opens in new tab">
+        TikTok
+      </a>
+      <a href="https://youtube.com/@SageSiren" 
+         target="_blank" 
+         rel="noopener noreferrer" 
+         class="card-btn youtube" 
+         aria-label="Visit SageSiren on YouTube - opens in new tab">
+        YouTube
+      </a>
+      <a href="https://instagram.com/SageSiren" 
+         target="_blank" 
+         rel="noopener noreferrer" 
+         class="card-btn instagram" 
+         aria-label="Visit SageSiren on Instagram - opens in new tab">
+        Instagram
+      </a>
+      <a href="https://discord.gg/bunnigang" 
+         target="_blank" 
+         rel="noopener noreferrer" 
+         class="card-btn discord" 
+         aria-label="Join SageSiren on Discord - opens in new tab">
+        Discord
+      </a>
+    </section>
     
-    <main>
-        <section id="main-links" class="card-list" role="navigation" aria-label="Primary social media links">
-            <a href="https://twitch.tv/SageSiren" target="_blank" rel="noopener noreferrer" class="card-btn twitch" aria-label="Visit SageSiren on Twitch">Twitch</a>
-            <a href="https://tiktok.com/@SageSiren" target="_blank" rel="noopener noreferrer" class="card-btn tiktok" aria-label="Visit SageSiren on TikTok">TikTok</a>
-            <a href="https://youtube.com/@SageSiren" target="_blank" rel="noopener noreferrer" class="card-btn youtube" aria-label="Visit SageSiren on YouTube">YouTube</a>
-            <a href="https://instagram.com/SageSiren" target="_blank" rel="noopener noreferrer" class="card-btn instagram" aria-label="Visit SageSiren on Instagram">Instagram</a>
-            <a href="https://discord.gg/bunnigang" target="_blank" rel="noopener noreferrer" class="card-btn discord" aria-label="Join SageSiren on Discord">Discord</a>
-        </section>
-        
-        <section id="creator-hub" class="media-kit-section" aria-labelledby="creator-hub-title">
-            <h2 id="creator-hub-title">Creator Hub & Media Kit</h2>
-            <div id="stats-cards" role="region" aria-label="Social media statistics"></div>
-            <div class="about">
-                <h3>About Me</h3>
-                <p>Brand partnerships: Capcom Creator, BunniGang, That Community</p>
-            </div>
-            <div class="contact">
-                <a href="mailto:sagesirenbiz@gmail.com" class="btn" aria-label="Contact via email">Contact</a>
-            </div>
-        </section>
-        
-        <section id="link-directory" class="link-directory" aria-labelledby="link-directory-title">
-            <h2 id="link-directory-title">Link Directory</h2>
-            <div id="links-by-category"></div>
-        </section>
-    </main>
+    <!-- Creator Hub / Media Kit Section -->
+    <section id="creator-hub" 
+             class="media-kit-section" 
+             aria-labelledby="creator-hub-title">
+      <h2 id="creator-hub-title">Creator Hub & Media Kit</h2>
+      
+      <!-- Dynamic Stats Cards -->
+      <div id="stats-cards" 
+           role="region" 
+           aria-label="Social media statistics"
+           aria-live="polite">
+        <!-- Stats loaded dynamically from JSON -->
+      </div>
+      
+      <!-- About Section -->
+      <div class="about">
+        <h3>About Me</h3>
+        <p>Brand partnerships: Capcom Creator, BunniGang, That Community</p>
+        <!-- Additional about content loaded from JSON -->
+      </div>
+      
+      <!-- Contact CTA -->
+      <div class="contact">
+        <a href="mailto:sagesirenbiz@gmail.com" 
+           class="btn" 
+           aria-label="Contact SageSiren via email">
+          Contact
+        </a>
+      </div>
+    </section>
     
-    <footer role="contentinfo">
-        <p>&copy; 2025 SageSiren. Cozy luxury, clean code.</p>
-    </footer>
+    <!-- Link Directory Section -->
+    <section id="link-directory" 
+             class="link-directory" 
+             aria-labelledby="link-directory-title">
+      <h2 id="link-directory-title">Link Directory</h2>
+      
+      <!-- Dynamic Links by Category -->
+      <div id="links-by-category" aria-live="polite">
+        <!-- Links loaded dynamically from JSON -->
+      </div>
+    </section>
+  </main>
+  
+  <!-- Footer -->
+  <footer role="contentinfo">
+    <p>&copy; 2025 SageSiren. Cozy luxury, clean code.</p>
+  </footer>
 </body>
 </html>
