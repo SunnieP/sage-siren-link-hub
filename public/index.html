@@ -4,48 +4,55 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Clean, responsive personal media hub for SageSiren. Functions as a Linktree + media kit. Fast, minimal, mobile-first, auto-updated stats.">
+    <meta name="theme-color" content="#344E41">
     <title>SageSiren | Link Hub</title>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@700;600&family=Inter:wght@400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="assets/style.css">
     <script defer src="src/main.js"></script>
 </head>
 <body class="dark-mode">
+    <!-- Theme Toggle Button -->
+    <button id="theme-toggle" aria-label="Switch to light mode" title="Toggle light/dark mode">🌙</button>
+    
     <header class="header">
         <img src="assets/avatar.png" alt="SageSiren Avatar" class="avatar">
         <h1>SageSiren</h1>
         <p class="tagline">Spiritual, Sage-coded, Feminine Energy</p>
         <p class="bio">Your cozy luxury hub for streaming, social links, and media kit.</p>
-        <div class="cta-buttons">
+        <nav class="cta-buttons" aria-label="Main navigation">
             <a href="#creator-hub" class="btn">Creator Hub</a>
             <a href="#link-directory" class="btn">Links</a>
-        </div>
+        </nav>
     </header>
+    
     <main>
-        <section id="main-links" class="card-list">
-            <!-- Main Call to Action buttons -->
-            <a href="https://twitch.tv/SageSiren" target="_blank" class="card-btn twitch">Twitch</a>
-            <a href="https://tiktok.com/@SageSiren" target="_blank" class="card-btn tiktok">TikTok</a>
-            <a href="https://youtube.com/@SageSiren" target="_blank" class="card-btn youtube">YouTube</a>
-            <a href="https://instagram.com/SageSiren" target="_blank" class="card-btn instagram">Instagram</a>
-            <a href="https://discord.gg/bunnigang" target="_blank" class="card-btn discord">Discord</a>
+        <section id="main-links" class="card-list" role="navigation" aria-label="Primary social media links">
+            <a href="https://twitch.tv/SageSiren" target="_blank" rel="noopener noreferrer" class="card-btn twitch" aria-label="Visit SageSiren on Twitch">Twitch</a>
+            <a href="https://tiktok.com/@SageSiren" target="_blank" rel="noopener noreferrer" class="card-btn tiktok" aria-label="Visit SageSiren on TikTok">TikTok</a>
+            <a href="https://youtube.com/@SageSiren" target="_blank" rel="noopener noreferrer" class="card-btn youtube" aria-label="Visit SageSiren on YouTube">YouTube</a>
+            <a href="https://instagram.com/SageSiren" target="_blank" rel="noopener noreferrer" class="card-btn instagram" aria-label="Visit SageSiren on Instagram">Instagram</a>
+            <a href="https://discord.gg/bunnigang" target="_blank" rel="noopener noreferrer" class="card-btn discord" aria-label="Join SageSiren on Discord">Discord</a>
         </section>
-        <section id="creator-hub" class="media-kit-section">
-            <h2>Creator Hub & Media Kit</h2>
-            <div id="stats-cards"></div>
+        
+        <section id="creator-hub" class="media-kit-section" aria-labelledby="creator-hub-title">
+            <h2 id="creator-hub-title">Creator Hub & Media Kit</h2>
+            <div id="stats-cards" role="region" aria-label="Social media statistics"></div>
             <div class="about">
                 <h3>About Me</h3>
                 <p>Brand partnerships: Capcom Creator, BunniGang, That Community</p>
             </div>
             <div class="contact">
-                <button class="btn">Contact</button>
+                <a href="mailto:sagesirenbiz@gmail.com" class="btn" aria-label="Contact via email">Contact</a>
             </div>
         </section>
-        <section id="link-directory" class="link-directory">
-            <h2>Link Directory</h2>
+        
+        <section id="link-directory" class="link-directory" aria-labelledby="link-directory-title">
+            <h2 id="link-directory-title">Link Directory</h2>
             <div id="links-by-category"></div>
         </section>
     </main>
-    <footer>
+    
+    <footer role="contentinfo">
         <p>&copy; 2025 SageSiren. Cozy luxury, clean code.</p>
     </footer>
 </body>
