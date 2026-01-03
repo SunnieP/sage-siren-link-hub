@@ -1,0 +1,19 @@
+# Ignore node_modules
+node_modules/
+
+# Ignore git files
+.git/
+.github/
+.gitignore
+
+# Ignore local env files
+.env
+.env.local
+
+# Ignore documentation
+*.md
+README.md
+
+# Ignore OS files
+.DS_Store
+Thumbs.db

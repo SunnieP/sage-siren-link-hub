@@ -1,0 +1,26 @@
+{
+  "name": "sage-siren-link-hub",
+  "version": "1.0.0",
+  "description": "SageSiren's cozy luxury hub for streaming, social links, and media kit",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js",
+    "fetch-stats": "node scripts/fetch-social-stats.js"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "dependencies": {
+    "express": "^4.18.2"
+  },
+  "devDependencies": {},
+  "keywords": [
+    "media-kit",
+    "link-hub",
+    "twitch",
+    "streaming"
+  ],
+  "author": "SageSiren",
+  "license": "MIT"
+}
