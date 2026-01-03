@@ -50,7 +50,7 @@ async function getTwitchToken() {
     });
 }
 
-// Fetch Twitch followers
+// Fetch Twitch followers and live status
 async function getTwitchStats() {
     try {
         const token = await getTwitchToken();
@@ -58,8 +58,14 @@ async function getTwitchStats() {
 
         const userId = process.env.TWITCH_USER_ID;
         const clientId = process.env.TWITCH_CLIENT_ID;
-        
-        const url = `https://api.twitch.tv/helix/channels/followers?broadcaster_id=${userId}`;
+
+        if (!userId || !clientId) {
+            console.log('Twitch user ID or client ID not configured, skipping...');
+            return null;
+        }
+
+        // Fetch followers
+        const followersUrl = `https://api.twitch.tv/helix/channels/followers?broadcaster_id=${userId}`;
         const options = {
             headers: {
                 'Authorization': `Bearer ${token}`,
@@ -67,8 +73,17 @@ async function getTwitchStats() {
             }
         };
 
-        const data = await httpsRequest(url, options);
-        return data.total || 0;
+        const followersData = await httpsRequest(followersUrl, options);
+        const followers = followersData.total || 0;
+
+        // Check if live
+        const streamsUrl = `https://api.twitch.tv/helix/streams?user_id=${userId}`;
+        const streamsData = await httpsRequest(streamsUrl, options);
+        const isLive = streamsData.data && streamsData.data.length > 0;
+
+        console.log(`Twitch: ${followers} followers, Live: ${isLive}`);
+
+        return { followers, isLive };
     } catch (error) {
         console.error('Error fetching Twitch stats:', error.message);
         return null;
@@ -102,45 +117,48 @@ async function getYouTubeStats() {
 // Main execution
 async function updateStats() {
     console.log('Fetching social media stats...');
-    
+
     const platforms = [];
-    
+
     // Fetch Twitch
-    const twitchFollowers = await getTwitchStats();
-    if (twitchFollowers !== null) {
-        platforms.push({ platform: 'Twitch', followers: twitchFollowers });
-        console.log(`Twitch: ${twitchFollowers} followers`);
+    const twitchData = await getTwitchStats();
+    if (twitchData !== null) {
+        platforms.push({
+            platform: 'Twitch',
+            followers: twitchData.followers,
+            isLive: twitchData.isLive || false
+        });
     }
-    
+
     // Fetch YouTube
     const youtubeSubscribers = await getYouTubeStats();
     if (youtubeSubscribers !== null) {
         platforms.push({ platform: 'YouTube', followers: youtubeSubscribers });
         console.log(`YouTube: ${youtubeSubscribers} subscribers`);
     }
-    
+
     // TikTok and Twitter would require additional API setup
     // Placeholder for future implementation
     console.log('TikTok and Twitter stats require additional API setup');
-    
+
     // If no platforms were fetched, keep existing data
     if (platforms.length === 0) {
         console.log('No stats fetched, keeping existing data');
         return;
     }
-    
+
     // Write to social.stats.json
     const statsPath = path.join(__dirname, '../public/data/social.stats.json');
     const statsData = { platforms, lastUpdated: new Date().toISOString() };
     fs.writeFileSync(statsPath, JSON.stringify(statsData, null, 2));
-    
+
     // Update media kit with latest stats
     const mediaKitPath = path.join(__dirname, '../public/data/media.kit.json');
     const mediaKit = JSON.parse(fs.readFileSync(mediaKitPath, 'utf8'));
     mediaKit.stats = platforms;
     mediaKit.lastUpdated = new Date().toISOString();
     fs.writeFileSync(mediaKitPath, JSON.stringify(mediaKit, null, 2));
-    
+
     console.log('Stats updated successfully!');
 }
 

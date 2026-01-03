@@ -124,41 +124,86 @@ function initButtonEffects() {
 }
 
 // ========================================
+// Show Loading Skeletons
+// ========================================
+function showLoadingSkeletons() {
+  const statsCards = document.getElementById('stats-cards');
+  if (statsCards) {
+    statsCards.innerHTML = `
+      <div class="stats-card skeleton" aria-hidden="true">
+        <div class="skeleton-text skeleton-text-lg"></div>
+        <div class="skeleton-text skeleton-text-md"></div>
+      </div>
+      <div class="stats-card skeleton" aria-hidden="true" style="animation-delay: 0.1s">
+        <div class="skeleton-text skeleton-text-lg"></div>
+        <div class="skeleton-text skeleton-text-md"></div>
+      </div>
+    `;
+  }
+}
+
+// ========================================
 // Render Media Site Content
 // ========================================
 async function renderMediaSite() {
+  // Show loading skeletons
+  showLoadingSkeletons();
+
   try {
-    // Load all data in parallel
-    const [statsRes, mediaKitRes, linkRes] = await Promise.all([
-      fetch('data/social.stats.json'),
-      fetch('data/media.kit.json'),
-      fetch('data/site.config.json')
+    // Load all data in parallel with timeout
+    const timeout = (ms) => new Promise((_, reject) =>
+      setTimeout(() => reject(new Error('Request timeout')), ms)
+    );
+
+    const [statsRes, mediaKitRes, linkRes] = await Promise.race([
+      Promise.all([
+        fetch('data/social.stats.json'),
+        fetch('data/media.kit.json'),
+        fetch('data/site.config.json')
+      ]),
+      timeout(10000) // 10 second timeout
     ]);
-    
+
+    // Check responses
+    if (!statsRes.ok || !mediaKitRes.ok || !linkRes.ok) {
+      throw new Error('Failed to fetch data');
+    }
+
     const [statsJson, mediaKitJson, linksJson] = await Promise.all([
       statsRes.json(),
       mediaKitRes.json(),
       linkRes.json()
     ]);
-    
+
     // Render stats cards with staggered animation
     renderStatsCards(statsJson);
-    
+
     // Render About Me
     renderAbout(mediaKitJson);
-    
+
     // Render links by category
     renderLinkCategories(linksJson);
-    
+
     // Initialize scroll reveal after content is loaded
     setTimeout(() => {
       initScrollReveal();
       initButtonEffects();
     }, 100);
-    
+
   } catch (error) {
     console.error('Error loading site data:', error);
     showErrorMessage();
+
+    // Retry once after 2 seconds
+    setTimeout(async () => {
+      try {
+        const statsRes = await fetch('data/social.stats.json');
+        const statsJson = await statsRes.json();
+        renderStatsCards(statsJson);
+      } catch (retryError) {
+        console.error('Retry failed:', retryError);
+      }
+    }, 2000);
   }
 }
 
@@ -168,18 +213,25 @@ async function renderMediaSite() {
 function renderStatsCards(statsJson) {
   const statsCards = document.getElementById('stats-cards');
   if (!statsCards || !statsJson.platforms) return;
-  
-  statsCards.innerHTML = statsJson.platforms.map((p, index) => `
-    <div class="stats-card" 
-         role="article" 
-         aria-label="${p.platform} statistics"
-         style="animation-delay: ${index * 0.1}s">
-      <strong>${p.platform}</strong>
-      <span aria-label="${p.followers} followers">
-        ${formatNumber(p.followers)} followers
-      </span>
-    </div>
-  `).join('');
+
+  statsCards.innerHTML = statsJson.platforms.map((p, index) => {
+    const liveIndicator = p.platform === 'Twitch' && p.isLive
+      ? '<span class="live-indicator" aria-label="Currently streaming live">🔴 LIVE</span>'
+      : '';
+
+    return `
+      <div class="stats-card ${p.isLive ? 'is-live' : ''}"
+           role="article"
+           aria-label="${p.platform} statistics"
+           data-platform="${p.platform.toLowerCase()}"
+           style="animation-delay: ${index * 0.1}s">
+        <strong>${p.platform} ${liveIndicator}</strong>
+        <span aria-label="${p.followers} followers">
+          ${formatNumber(p.followers)} followers
+        </span>
+      </div>
+    `;
+  }).join('');
 }
 
 // ========================================
@@ -251,12 +303,83 @@ function showErrorMessage() {
 }
 
 // ========================================
+// Twitch Live Status Polling
+// ========================================
+let liveStatusInterval = null;
+
+async function checkTwitchLiveStatus() {
+  try {
+    const response = await fetch('/api/twitch/live');
+    const data = await response.json();
+
+    // Update Twitch card
+    const twitchCard = document.querySelector('.stats-card[data-platform="twitch"]');
+    if (!twitchCard) return;
+
+    const strongTag = twitchCard.querySelector('strong');
+    if (!strongTag) return;
+
+    // Remove existing live indicator
+    const existingIndicator = twitchCard.querySelector('.live-indicator');
+    if (existingIndicator) {
+      existingIndicator.remove();
+    }
+
+    // Add/update live status
+    if (data.isLive) {
+      twitchCard.classList.add('is-live');
+      strongTag.innerHTML = 'Twitch <span class="live-indicator" aria-label="Currently streaming live">🔴 LIVE</span>';
+
+      // Add pulse animation if not already present
+      if (!prefersReducedMotion) {
+        twitchCard.style.animation = 'pulse 2s infinite';
+      }
+    } else {
+      twitchCard.classList.remove('is-live');
+      strongTag.textContent = 'Twitch';
+      twitchCard.style.animation = '';
+    }
+
+  } catch (error) {
+    console.error('Failed to check Twitch live status:', error);
+    // Silently fail - don't disrupt user experience
+  }
+}
+
+function startLiveStatusPolling() {
+  // Initial check after 2 seconds (let page load first)
+  setTimeout(checkTwitchLiveStatus, 2000);
+
+  // Poll every 60 seconds
+  liveStatusInterval = setInterval(checkTwitchLiveStatus, 60000);
+}
+
+function stopLiveStatusPolling() {
+  if (liveStatusInterval) {
+    clearInterval(liveStatusInterval);
+    liveStatusInterval = null;
+  }
+}
+
+// Stop polling when page is hidden (save resources)
+document.addEventListener('visibilitychange', () => {
+  if (document.hidden) {
+    stopLiveStatusPolling();
+  } else {
+    startLiveStatusPolling();
+  }
+});
+
+// ========================================
 // Initialize on DOM Ready
 // ========================================
 document.addEventListener('DOMContentLoaded', () => {
   initThemeToggle();
   renderMediaSite();
-  
+
+  // Start live status polling
+  startLiveStatusPolling();
+
   // Add smooth scroll behavior
   document.documentElement.style.scrollBehavior = prefersReducedMotion ? 'auto' : 'smooth';
 });
